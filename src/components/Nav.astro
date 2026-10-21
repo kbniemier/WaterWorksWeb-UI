@@ -1,0 +1,164 @@
+---
+import Logo from './Logo.astro';
+import ThemeToggle from './ThemeToggle.astro';
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About Me' },
+  { href: '/services', label: 'Services' },
+  { href: '/contact', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+
+<header class="site-header">
+  <nav class="nav container" aria-label="Main navigation">
+    <a href="/" class="nav-logo" aria-label="WaterWorksWeb UI home">
+      <Logo />
+    </a>
+
+    <ul class="nav-links" id="nav-links">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class:list={['nav-link', { active: currentPath === link.href || (link.href !== '/' && currentPath.startsWith(link.href)) }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="nav-actions">
+      <a href="/contact" class="btn btn-primary nav-cta">Free consultation</a>
+      <ThemeToggle />
+      <button class="nav-menu-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.3s;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-block: 0.85rem;
+  }
+
+  .nav-logo {
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 0.25rem;
+    margin-inline: auto;
+  }
+
+  .nav-link {
+    font-family: var(--font-heading);
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    padding: 0.45em 0.9em;
+    border-radius: 999px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .nav-link:hover {
+    color: var(--color-text);
+    background: var(--color-surface);
+  }
+
+  .nav-link.active {
+    color: var(--color-accent);
+    background: var(--color-accent-soft);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .nav-cta {
+    padding: 0.6em 1.2em;
+    font-size: 0.88rem;
+  }
+
+  .nav-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: 0.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .nav {
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .nav-actions {
+      margin-left: auto;
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    .nav-menu-toggle {
+      display: block;
+    }
+
+    .nav-links {
+      display: none;
+      order: 3;
+      width: 100%;
+      flex-direction: column;
+      margin: 0;
+      padding-bottom: 0.75rem;
+    }
+
+    .nav-links.open {
+      display: flex;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 0.7em 1em;
+      border-radius: var(--radius-md);
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => {
+    const open = links?.classList.toggle('open') ?? false;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+</script>

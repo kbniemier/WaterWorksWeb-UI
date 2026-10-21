@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+
+const values = [
+  { icon: 'users', title: 'You work with me, directly', text: 'No account managers or hand-offs. The person you talk to is the person building your site.' },
+  { icon: 'zap', title: 'AI for speed, humans for judgment', text: 'AI handles the heavy lifting so I can spend my time on strategy, design details, and your goals.' },
+  { icon: 'heart', title: 'Plain-English communication', text: 'No jargon, no surprise invoices. You will always know what is happening and why.' },
+  { icon: 'shield', title: 'Built to last', text: 'Fast, secure, accessible websites on modern technology — not a fragile pile of plugins.' },
+];
+---
+
+<Layout
+  title="About Me"
+  description="Meet the founder of WaterWorksWeb UI — an AI-driven web design studio helping dental, home-service, and mental-health practices grow online."
+>
+  <section class="page-header">
+    <div class="container">
+      <span class="eyebrow">About Me</span>
+      <h1>Hi, I'm the human behind the <span class="text-gradient">AI</span>.</h1>
+      <p class="lead">
+        I started WaterWorksWeb UI to give local service businesses the kind of website that used to be reserved
+        for companies with big marketing budgets.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container story">
+      <div class="story-copy">
+        <h2>Why I do this</h2>
+        <p>
+          Dentists, plumbers, electricians, HVAC techs, therapists, psychologists — these are the people who keep
+          our communities healthy and our homes running. They're experts at what they do, but most of them didn't go
+          into business to fiddle with websites.
+        </p>
+        <p>
+          Too often I see great local businesses stuck with slow, outdated sites that don't show up on Google and
+          don't make it easy to book an appointment or request a quote. Meanwhile, the competitor down the street with
+          a better website gets the call.
+        </p>
+        <p>
+          That's where I come in. I combine modern AI tools with thoughtful, hands-on design to build websites that
+          look great, load fast, rank locally, and — most importantly — turn visitors into patients, clients, and
+          customers.
+        </p>
+      </div>
+
+      <aside class="story-card card">
+        <div class="icon-badge"><Icon name="droplet" /></div>
+        <h3>Why "WaterWorks"?</h3>
+        <p>
+          Like good plumbing, a good website should just <em>work</em> — quietly, reliably, and without you having to
+          think about it. Leads should flow in. Information should flow out. Nothing should leak.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">How I work</span>
+        <h2>What you can expect</h2>
+      </div>
+      <div class="grid grid-4">
+        {values.map(v => (
+          <div class="card">
+            <div class="icon-badge"><Icon name={v.icon} /></div>
+            <h3>{v.title}</h3>
+            <p>{v.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container ai-block">
+      <div>
+        <span class="eyebrow">My approach to AI</span>
+        <h2>AI is a power tool, not a replacement for care</h2>
+      </div>
+      <div>
+        <p class="lead">
+          I use AI to research your market, draft layouts, write first-pass copy, and build smart features like
+          24/7 chat assistants. Then every word, image, and interaction is reviewed and refined by me — so your site
+          sounds like you, respects your clients' privacy, and represents your business accurately.
+        </p>
+        <ul class="check-list">
+          <li>Faster turnaround and lower cost than a traditional agency</li>
+          <li>Every page human-reviewed for accuracy and tone</li>
+          <li>Privacy-first choices for healthcare and therapy practices</li>
+          <li>You own your website and content — always</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner heading="Let's talk about your business" text="Tell me a bit about what you do and where you want to grow. I'll take it from there." />
+</Layout>
+
+<style>
+  .story {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .story-copy h2 {
+    margin-bottom: 1.25rem;
+  }
+
+  .story-copy p {
+    color: var(--color-text-muted);
+    margin-bottom: 1.1rem;
+    font-size: 1.05rem;
+  }
+
+  .story-card {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .story-card em {
+    color: var(--color-accent);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .ai-block {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 860px) {
+    .story,
+    .ai-block {
+      grid-template-columns: 1fr;
+    }
+
+    .story-card {
+      position: static;
+    }
+  }
+</style>

@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { industries, services } from '../data/site';
+---
+
+<Layout
+  title="Services Offered"
+  description="AI-powered website design, AI chat assistants, local SEO, copywriting, booking integrations, and care plans for dental, plumbing, HVAC, electrical, therapy, and psychology practices."
+>
+  <section class="page-header">
+    <div class="container">
+      <span class="eyebrow">Services Offered</span>
+      <h1>Everything your website needs to <span class="text-gradient">win new clients</span>.</h1>
+      <p class="lead">
+        Pick a single service or bundle them together. Every project starts with a free consultation and a clear,
+        fixed quote — no surprises.
+      </p>
+    </div>
+  </section>
+
+  <!-- Core services -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">What I offer</span>
+        <h2>Core services</h2>
+      </div>
+      <div class="grid grid-3">
+        {services.map(s => (
+          <article class="card service-card">
+            <div class="icon-badge"><Icon name={s.icon} /></div>
+            <h3>{s.name}</h3>
+            <p>{s.description}</p>
+            <ul class="check-list">
+              {s.includes.map(item => <li>{item}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Industries</span>
+        <h2>Tailored to your field</h2>
+        <p class="lead">I specialize in businesses where trust, clarity, and easy booking make all the difference.</p>
+      </div>
+
+      <div class="industries">
+        {industries.map((i, idx) => (
+          <article id={i.slug} class:list={['industry', { reverse: idx % 2 === 1 }]}>
+            <div class="industry-head">
+              <div class="icon-badge large"><Icon name={i.icon} size={30} /></div>
+              <div>
+                <h3>{i.name}</h3>
+                <p>{i.blurb}</p>
+              </div>
+            </div>
+            <ul class="check-list">
+              {i.features.map(f => <li>{f}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner heading="Not sure what you need?" text="That's what the free consultation is for. I'll look at your current site and recommend only what will actually move the needle." />
+</Layout>
+
+<style>
+  .service-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .service-card .check-list {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--color-border);
+  }
+
+  .service-card > p {
+    margin-bottom: 1.25rem;
+  }
+
+  .industries {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .industry {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-card-bg);
+    scroll-margin-top: 6rem;
+  }
+
+  .industry:target {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 4px var(--color-accent-soft);
+  }
+
+  .industry-head {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .industry-head h3 {
+    margin-bottom: 0.4rem;
+  }
+
+  .industry-head p {
+    color: var(--color-text-muted);
+  }
+
+  .icon-badge.large {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  .industry .check-list {
+    margin-top: 0;
+  }
+
+  @media (max-width: 800px) {
+    .industry {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,396 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { site, industries, services, process } from '../data/site';
+
+const benefits = [
+  { icon: 'zap', title: 'Launch in weeks, not months', text: 'AI-accelerated design and development means you see real designs in days.' },
+  { icon: 'target', title: 'Built to convert', text: 'Every page is structured to turn visitors into calls, bookings, and form fills.' },
+  { icon: 'pin', title: 'Found on Google', text: 'Local SEO, schema markup, and speed tuning come standard — not as an upsell.' },
+  { icon: 'clock', title: 'Working 24/7', text: 'AI chat assistants answer questions and capture leads while you sleep.' },
+];
+---
+
+<Layout title={site.name}>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-waves" aria-hidden="true">
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path d="M0,224L60,208C120,192,240,160,360,165.3C480,171,600,213,720,218.7C840,224,960,192,1080,170.7C1200,149,1320,139,1380,133.3L1440,128L1440,320L0,320Z" />
+      </svg>
+    </div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">AI-driven web design</span>
+        <h1>Websites that keep <span class="text-gradient">new clients flowing</span> in.</h1>
+        <p class="lead">
+          I design modern, high-converting websites for dental practices, plumbers, HVAC and electrical
+          contractors, therapists, psychologists, and other local businesses — powered by AI, polished by hand.
+        </p>
+        <div class="hero-actions">
+          <a href="/contact" class="btn btn-primary">Get a free site review <Icon name="arrow" size={18} /></a>
+          <a href="/services" class="btn btn-ghost">See services</a>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="mock-browser">
+          <div class="mock-bar"><span></span><span></span><span></span></div>
+          <div class="mock-body">
+            <div class="mock-hero"></div>
+            <div class="mock-line w-70"></div>
+            <div class="mock-line w-50"></div>
+            <div class="mock-btn"></div>
+            <div class="mock-cards">
+              <div></div><div></div><div></div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-chat">
+          <div class="mock-chat-head"><Icon name="chat" size={16} /> AI Assistant</div>
+          <p class="bubble bot">Hi! Need to book a cleaning?</p>
+          <p class="bubble user">Yes — any openings Friday?</p>
+          <p class="bubble bot">Friday at 10:30 is open. Want it?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industries -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header center">
+        <span class="eyebrow">Who I work with</span>
+        <h2>Built for businesses that serve real people</h2>
+        <p class="lead">Every industry has its own customers, questions, and search habits. Your website should too.</p>
+      </div>
+      <div class="grid grid-4">
+        {industries.map(i => (
+          <a href={`/services#${i.slug}`} class="card industry-card">
+            <div class="icon-badge"><Icon name={i.icon} /></div>
+            <h3>{i.name}</h3>
+            <p>{i.blurb}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Why WaterWorksWeb UI</span>
+        <h2>More than a pretty website</h2>
+        <p class="lead">A great site is your best salesperson. Here's what every project includes.</p>
+      </div>
+      <div class="grid grid-4">
+        {benefits.map(b => (
+          <div class="benefit">
+            <div class="icon-badge"><Icon name={b.icon} /></div>
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services preview -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header split">
+        <div>
+          <span class="eyebrow">Services</span>
+          <h2>Everything you need to grow online</h2>
+        </div>
+        <a href="/services" class="btn btn-ghost">All services <Icon name="arrow" size={18} /></a>
+      </div>
+      <div class="grid grid-3">
+        {services.slice(0, 3).map(s => (
+          <div class="card">
+            <div class="icon-badge"><Icon name={s.icon} /></div>
+            <h3>{s.name}</h3>
+            <p>{s.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-header center">
+        <span class="eyebrow">How it works</span>
+        <h2>A simple, stress-free process</h2>
+      </div>
+      <ol class="process">
+        {process.map(p => (
+          <li>
+            <span class="process-step">{p.step}</span>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CtaBanner />
+</Layout>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    padding-block: clamp(3.5rem, 8vw, 6.5rem) clamp(5rem, 10vw, 8rem);
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 85% 10%, var(--color-accent-soft), transparent 55%),
+      radial-gradient(ellipse at 0% 100%, var(--color-accent-soft), transparent 50%);
+  }
+
+  .hero-waves {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 120px;
+    pointer-events: none;
+  }
+
+  .hero-waves svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-waves path {
+    fill: var(--color-surface);
+  }
+
+  .hero-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .hero-copy h1 {
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2rem;
+  }
+
+  /* Hero visual (decorative mock-up) */
+  .hero-visual {
+    position: relative;
+    padding: 1rem 2rem 3rem 0;
+  }
+
+  .mock-browser {
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card-hover);
+    overflow: hidden;
+  }
+
+  .mock-bar {
+    display: flex;
+    gap: 6px;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .mock-bar span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-surface-2);
+  }
+
+  .mock-body {
+    padding: 1.25rem;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .mock-hero {
+    height: 110px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(120deg, var(--color-accent), var(--color-aqua));
+    opacity: 0.85;
+  }
+
+  .mock-line {
+    height: 10px;
+    border-radius: 99px;
+    background: var(--color-surface-2);
+  }
+
+  .w-70 { width: 70%; }
+  .w-50 { width: 50%; }
+
+  .mock-btn {
+    width: 90px;
+    height: 24px;
+    border-radius: 99px;
+    background: var(--color-accent);
+  }
+
+  .mock-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+    margin-top: 0.4rem;
+  }
+
+  .mock-cards div {
+    height: 60px;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+
+  .mock-chat {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 230px;
+    background: var(--color-card-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card-hover);
+    padding: 0.9rem;
+    display: grid;
+    gap: 0.45rem;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .mock-chat-head {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .bubble {
+    font-size: 0.78rem;
+    line-height: 1.4;
+    padding: 0.45rem 0.7rem;
+    border-radius: 12px;
+    max-width: 90%;
+  }
+
+  .bubble.bot {
+    background: var(--color-surface);
+    border-bottom-left-radius: 4px;
+  }
+
+  .bubble.user {
+    justify-self: end;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    border-bottom-right-radius: 4px;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Industry cards */
+  .industry-card {
+    display: block;
+  }
+
+  /* Benefits */
+  .benefit h3 {
+    margin-bottom: 0.4rem;
+  }
+
+  .benefit p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  /* Services preview header */
+  .section-header.split {
+    max-width: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* Process */
+  .process {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+    gap: 1.5rem;
+  }
+
+  .process li {
+    position: relative;
+    padding-top: 1.25rem;
+    border-top: 2px solid var(--color-border);
+  }
+
+  .process li::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 48px;
+    height: 2px;
+    background: var(--color-accent);
+  }
+
+  .process-step {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-accent);
+  }
+
+  .process h3 {
+    margin-block: 0.35rem 0.4rem;
+  }
+
+  .process p {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 900px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+      max-width: 480px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-visual {
+      padding-right: 0;
+    }
+
+    .mock-chat {
+      width: 200px;
+    }
+  }
+</style>

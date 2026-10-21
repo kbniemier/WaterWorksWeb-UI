@@ -1,0 +1,313 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import { site, industries } from '../data/site';
+
+// Set PUBLIC_FORM_ENDPOINT (e.g. a Formspree URL) to receive submissions directly.
+// Without it, the form falls back to opening the visitor's email app.
+const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
+
+const nextSteps = [
+  { icon: 'mail', title: 'I reply within 1 business day', text: 'Usually much sooner. Every message is read by me personally.' },
+  { icon: 'calendar', title: 'We book a free 30-minute call', text: 'We talk through your goals, your clients, and your current site.' },
+  { icon: 'pen', title: 'You get a clear, fixed quote', text: 'A written plan with scope, timeline, and price. No pressure, no obligation.' },
+];
+---
+
+<Layout
+  title="Contact"
+  description="Book a free consultation with WaterWorksWeb UI. Tell me about your dental, home-service, therapy, or psychology practice and I'll show you how a better website can grow it."
+>
+  <section class="page-header">
+    <div class="container">
+      <span class="eyebrow">Contact</span>
+      <h1>Let's build something that <span class="text-gradient">works</span>.</h1>
+      <p class="lead">
+        Tell me a little about your business. I'll get back to you with ideas — and a free review of your current
+        website if you have one.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container contact-grid">
+      <form
+        class="contact-form card"
+        id="contact-form"
+        action={formEndpoint || undefined}
+        method="POST"
+        data-endpoint={formEndpoint}
+        data-email={site.email}
+      >
+        <div class="field-row">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="business">Business name</label>
+            <input id="business" name="business" type="text" autocomplete="organization" />
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="optional">(optional)</span></label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="industry">Industry</label>
+            <select id="industry" name="industry" required>
+              <option value="" disabled selected>Select one…</option>
+              <option>Dental</option>
+              <option>Plumbing</option>
+              <option>HVAC</option>
+              <option>Electrical</option>
+              <option>Therapy / Counseling</option>
+              <option>Psychology</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="website">Current website <span class="optional">(optional)</span></label>
+            <input id="website" name="website" type="text" inputmode="url" placeholder="yourbusiness.com" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message">How can I help?</label>
+          <textarea id="message" name="message" rows="5" required placeholder="New website, redesign, AI chat assistant, SEO…"></textarea>
+        </div>
+
+        <!-- Honeypot for spam bots -->
+        <input type="text" name="_gotcha" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <button type="submit" class="btn btn-primary">Send message <Icon name="arrow" size={18} /></button>
+        <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
+      </form>
+
+      <aside class="contact-aside">
+        <h2>What happens next</h2>
+        <ol class="steps">
+          {nextSteps.map(s => (
+            <li>
+              <div class="icon-badge"><Icon name={s.icon} /></div>
+              <div>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div class="direct card">
+          <p>Prefer email?</p>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </div>
+
+        <p class="serve">
+          Proudly serving {industries.slice(0, 3).map(i => i.name.toLowerCase()).join(', ')}, and more.
+        </p>
+      </aside>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+  }
+
+  .contact-form:hover {
+    transform: none;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .optional {
+    font-weight: 400;
+    color: var(--color-text-muted);
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+    font-size: 0.95rem;
+    padding: 0.7em 0.9em;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg);
+    color: var(--color-text);
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .contact-form .btn {
+    justify-self: start;
+  }
+
+  .form-note {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    min-height: 1.5em;
+  }
+
+  .form-note.success { color: var(--color-accent); font-weight: 600; }
+  .form-note.error { color: #C2410C; }
+
+  .contact-aside h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .steps {
+    list-style: none;
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .steps li {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .steps .icon-badge {
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  .steps h3 {
+    font-size: 1rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .steps p {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+  }
+
+  .direct {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .direct p {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .direct a {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--color-accent);
+    overflow-wrap: anywhere;
+  }
+
+  .serve {
+    margin-top: 1.5rem;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 860px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .field-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const note = document.getElementById('form-note')!;
+  const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const endpoint = form.dataset.endpoint;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    if (data.get('_gotcha')) return;
+
+    // No form backend configured: open the visitor's email app instead
+    if (!endpoint) {
+      const body = ['name', 'email', 'business', 'phone', 'industry', 'website', 'message']
+        .map(k => `${k[0].toUpperCase() + k.slice(1)}: ${data.get(k) ?? ''}`)
+        .join('\n');
+      const subject = `New project inquiry from ${data.get('name')}`;
+      window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      note.className = 'form-note';
+      note.textContent = 'Opening your email app…';
+      return;
+    }
+
+    button.disabled = true;
+    note.className = 'form-note';
+    note.textContent = 'Sending…';
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      note.className = 'form-note success';
+      note.textContent = "Thanks! Your message is on its way — I'll be in touch soon.";
+    } catch {
+      note.className = 'form-note error';
+      note.textContent = `Something went wrong. Please email me directly at ${form.dataset.email}.`;
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>

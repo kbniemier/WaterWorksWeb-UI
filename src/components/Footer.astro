@@ -1,0 +1,120 @@
+---
+import Logo from './Logo.astro';
+import { site, industries } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <Logo />
+      <p>{site.tagline}. Modern, fast websites that bring in patients, clients, and calls.</p>
+    </div>
+
+    <div>
+      <h4>Explore</h4>
+      <ul>
+        <li><a href="/about">About Me</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4>Industries</h4>
+      <ul>
+        {industries.map(i => <li><a href={`/services#${i.slug}`}>{i.name}</a></li>)}
+      </ul>
+    </div>
+
+    <div>
+      <h4>Get in touch</h4>
+      <ul>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><a href="/contact">Book a free consultation</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>&copy; {year} {site.name}. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-deep);
+    color: #C3D6DE;
+    padding-top: 4rem;
+    margin-top: auto;
+  }
+
+  .site-footer :global(.logo-text) {
+    color: #F0F7FA;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1.3fr 1.3fr;
+    gap: 2.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .footer-brand p {
+    color: #93B1BF;
+    font-size: 0.92rem;
+    margin-top: 1rem;
+    max-width: 34ch;
+  }
+
+  h4 {
+    color: #F0F7FA;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  a {
+    font-size: 0.92rem;
+    color: #93B1BF;
+    transition: color 0.2s;
+    overflow-wrap: anywhere;
+  }
+
+  a:hover {
+    color: #6AD3DB;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-block: 1.5rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.85rem;
+    color: #6F8E9C;
+  }
+
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
